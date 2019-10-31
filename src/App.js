@@ -32,11 +32,18 @@ function App() {
 
   const [name, setName ] = useState("Mary")
   const [surname, setSurname ] = useState("Poppins")
+  const [width, setWidth] = useState(window.innerWidth)
 
   const locale = useContext(LocaleContext)
 
   useEffect( ()=> {
     document.title = name + ' ' + surname
+  })
+
+   //Conceptuall seperate , use effect more than once
+  useEffect( ()=> {
+    const handleResize = () => setWidth(window.innerWidth)
+    window.addEventListener('resize', handleResize)
   })
 
   function handleNameChange(e) {
@@ -77,6 +84,7 @@ function App() {
         />
 
         <InputLabel>{locale}</InputLabel>
+        <InputLabel>{width}</InputLabel>
         </div>
     </section>
   
@@ -108,3 +116,7 @@ export default App;
 //Most measurements align to an 8dp grid applied, which aligns both spacing and the overall layout.
 
 //The <section> tag is new in HTML5.
+
+//https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+//https://developer.mozilla.org/en-US/docs/Web/Events
+//https://developer.mozilla.org/en-US/docs/Web/API/Window/resize_event

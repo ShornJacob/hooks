@@ -32,19 +32,27 @@ function App() {
 
   const [name, setName ] = useState("Mary")
   const [surname, setSurname ] = useState("Poppins")
-  const [width, setWidth] = useState(window.innerWidth)
 
   const locale = useContext(LocaleContext)
 
-  useEffect( ()=> {
-    document.title = name + ' ' + surname
-  })
+  //use of custom hooks. that can be shared
+  const width= useWindowWidth()
+  useDocumentTitle(name + ' ' + surname)
+
+  // useEffect( ()=> {
+  //   document.title = name + ' ' + surname
+  // })
 
    //Conceptuall seperate , use effect more than once
-  useEffect( ()=> {
-    const handleResize = () => setWidth(window.innerWidth)
-    window.addEventListener('resize', handleResize)
-  })
+  // useEffect( ()=> {
+  //   const handleResize = () => setWidth(window.innerWidth)
+  //   window.addEventListener('resize', handleResize)
+
+  //   //return a function. react will call this to clean up, unsubscribe
+  //   return () => {
+  //     window.removeEventListener('resize',handleResize)
+  //   }
+  // })
 
   function handleNameChange(e) {
     setName(e.target.value)
@@ -98,7 +106,32 @@ function App() {
 
 export default App;
 
+//Another functional component that returns a width, rather than a JSX//
+//calling it a function hook, By convention starts with use
+function useWindowWidth() {
 
+  const [width, setWidth] = useState(window.innerWidth)
+
+  useEffect( ()=> {
+    const handleResize = () => setWidth(window.innerWidth)
+    window.addEventListener('resize', handleResize)
+
+    //return a function. react will call this to clean up, unsubscribe
+    return () => {
+      window.removeEventListener('resize',handleResize)
+    }
+  })
+
+  return width
+}
+
+//custom hooks can take values, return or not return values
+function useDocumentTitle(title) {
+   useEffect( ()=> {
+    document.title = title
+  })
+
+}
 //https://css-tricks.com/almanac/properties/f/flex-wrap/
 //flex-wrap: wrap;
 //Specifies that the flexible items will wrap if necessary

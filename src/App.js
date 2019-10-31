@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {TextField} from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -34,6 +34,10 @@ function App() {
   const [surname, setSurname ] = useState("Poppins")
 
   const locale = useContext(LocaleContext)
+
+  useEffect( ()=> {
+    document.title = name + ' ' + surname
+  })
 
   function handleNameChange(e) {
     setName(e.target.value)

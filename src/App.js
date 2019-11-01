@@ -20,6 +20,13 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1),
     width: 200,
   },
+
+  
+  inputLabel: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+  },
 }));
 
 
@@ -96,8 +103,8 @@ function App() {
         <TextField className={classes.textField} {...name} />
         <TextField className={classes.textField} {...surname} />
 
-        <InputLabel>{locale}</InputLabel>
-        <InputLabel>{width}</InputLabel>
+        <InputLabel className={classes.inputLabel}>{locale}</InputLabel>
+        <InputLabel className={classes.inputLabel}>{width}</InputLabel>
         </div>
     </section>
   

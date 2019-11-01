@@ -30,14 +30,14 @@ function App() {
 
   console.log(useTheme())
 
-  const [name, setName ] = useState("Mary")
-  const [surname, setSurname ] = useState("Poppins")
+  const name = useTextField('Mary')
+  const surname = useTextField('Poppins')
 
   const locale = useContext(LocaleContext)
 
   //use of custom hooks. that can be shared
   const width= useWindowWidth()
-  useDocumentTitle(name + ' ' + surname)
+  useDocumentTitle(name.value + ' ' + surname.value)
 
   // useEffect( ()=> {
   //   document.title = name + ' ' + surname
@@ -54,13 +54,13 @@ function App() {
   //   }
   // })
 
-  function handleNameChange(e) {
-    setName(e.target.value)
-  }
+  // function handleNameChange(e) {
+  //   setName(e.target.value)
+  // }
 
-  function handleSurnameChange(e) {
-    setSurname(e.target.value)
-  }
+  // function handleSurnameChange(e) {
+  //   setSurname(e.target.value)
+  // }
 
   const classes = useStyles();
 
@@ -73,7 +73,7 @@ function App() {
    
     <section>
     <div className={classes.container}>
-       <TextField
+       {/* <TextField
           // id="standard-basic"
           // label="Name"
           // margin="normal"
@@ -89,7 +89,12 @@ function App() {
           value={surname}
           onChange={handleSurnameChange}
           className={classes.textField}
-        />
+        /> */}
+
+        {/* Spread over the objects returned from use text field */}
+
+        <TextField className={classes.textField} {...name} />
+        <TextField className={classes.textField} {...surname} />
 
         <InputLabel>{locale}</InputLabel>
         <InputLabel>{width}</InputLabel>
@@ -105,6 +110,21 @@ function App() {
 }
 
 export default App;
+
+
+function useTextField(initialValue) {
+
+  const [value, setValue] = useState(initialValue)
+  function handleChange(e) {
+    setValue(e.target.value)
+  }
+
+  //get current value and changehandler
+  return {
+    value,
+    onChange: handleChange
+  }
+}
 
 //Another functional component that returns a width, rather than a JSX//
 //calling it a function hook, By convention starts with use
